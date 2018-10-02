@@ -1,0 +1,15 @@
+# This file shall contain onlly very basic information required to
+# set the application configuration location
+server:
+  port: 8080
+
+spring:
+  profiles.active: prod
+  application:
+    name: template-app
+  cloud:
+    config:
+      enabled: true
+      uri: http://config:8888
+      fail-fast: true
+      password: ${SPRING_CLOUD_CONFIG_PASSWORD:}

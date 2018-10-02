@@ -1,0 +1,13 @@
+app:
+  TimeService:
+    timezone: GMT
+  TimeCompareScheduler:
+    enabled: true
+    fixedPeriod: 10000
+    initialDelay: 5000
+
+logging:
+  level:
+    org.springframework: INFO
+    org.springframework.security: INFO
+    org.apache.http.wire: INFO # DEBUG will log full content of HTTP request/response

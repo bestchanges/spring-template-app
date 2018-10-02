@@ -1,0 +1,25 @@
+version: '3'
+services:
+  webdav:
+    build: ./docker-webdav/
+    image: kaduu/crawler-file-webdav:1.0
+    hostname: crawler-webdav
+    volumes:
+    - ./userfiles:/var/webdav
+    - ./docker-webdav/config/webdav.conf:/etc/apache2/sites-available/webdav.conf
+    - ./docker-webdav/config/users.password:/etc/apache2/users.password
+    ports:
+    - "8872:80"
+  crawlerfile:
+    build: .
+    image: kaduu/crawler-file-app:1.0
+    hostname: crawler-file
+    tty: true
+    volumes:
+    - ./userfiles:/app/userfiles
+    - ./workdir:/app/workdir
+    - ./gateway.jks:/app/gateway.jks
+    command: ["java", "-Xmx1g", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005", "-Dspring.profiles.active=dev", "-jar", "crawler-file.jar" ]
+    ports:
+    - "8871:8871"
+    - "5005:5005"

@@ -1,0 +1,6 @@
+.idea/
+*.iml
+target/
+# do not send temporally config files to git
+/application*.yml
+/application*.properties
