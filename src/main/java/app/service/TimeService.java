@@ -1,8 +1,9 @@
-package service;
+package app.service;
 
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.TimeZone;
 
 @Service
@@ -16,5 +17,9 @@ public class TimeService {
 
     public TimeZone getTimezone() {
         return timezone;
+    }
+
+    public Date now() {
+        return new Date();
     }
 }

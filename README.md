@@ -14,6 +14,7 @@ $ git remote set-url origin <your git>
 * Ctrl+Shift+R (replace in Path) 
 * Choose: In project
 * replace: template-app with: your-app 
+* replace: 8080 with: <your application port> 
 
 ## What's inside
 

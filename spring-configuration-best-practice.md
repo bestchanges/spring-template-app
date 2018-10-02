@@ -2,47 +2,44 @@
 
 This document describes technique of configuration of Spring application.
 
-What we want:
-* work out of the box with minimum or none actions required to run
-* be secure: No passwords shall be in repository
+What do we want:
+* out-of-the-box: it shall work with minimum or none actions required to run
+* be secure: no passwords shall be in repository
 * be simple: as simple as possible
-* be consistent: deliver the app as Docker container (use the same image for all platforms)
+* be consistent: deliver the app as Docker container (and use the same image for all installations)
 * be safe: avoid occasionally run application with wrong profile (like run dev profile on production)
-* be consistent: configuration is part of Unit Tests and used during build in CI
-* be convenient: developer can run application right from IDE (no docker, no spring-config required)
+* be consistent: configuration files are the part of the Unit Tests and are used during build in CI
+* be convenient: developer can run application from IDE (with no docker, no spring-config required)
 * developer can override any configuration properties locally
 
 ## Configuration files
 
-On testing/staging/producton environments automatically config with [spring-config](https://cloud.spring.io/spring-cloud-config/)
-On development will use static .properties or .yml files. Here we use .yml files, but this all is applicable to .properties files as well.
+On testing/staging/producton environments use [spring-config](https://cloud.spring.io/spring-cloud-config/)
+On development use static .properties or .yml files. Here we use .yml files, but this all is applicable to .properties files as well.
 
 There are have two sets of configuration files: bootstrap*.yml and application*.yml.
 While bootstrap*.yml files define HOW application is to be configured,
 application*.yml files contain configuration settings for the application itself.
-
-Config files located in root directory overrides values from resources files.
 
 ```
 src/java/resources/bootstrap.yml # default profile to 'prod' and enable spring-config + provide
 src/java/resources/bootstrap-dev.yml # disable spring-config for 'dev' profile
 src/java/resources/application.yml
 src/java/resources/application-dev.yml
-bootstrap.yml # set default profile to 'dev' when run locally from IDE
-application.yml # temporally settings for this local machine (this file in .gitignore)
+bootstrap.yml # set default profile to 'dev', used when run from IDE
+application.yml
 ```
+
+Config files located in root directory override values from resources-based files.
+
+Local settings for this machine can be set in application.yml in the root directory.
+It is not going to be stored in git repository.
 
 .gitignore
 ```
 # .... other things...
-application.yml
+/application.yml
 ```
-
-src/java/resources/bootstrap.yml:
-```yaml
-
-```
-
 
 ## Using profiles
 
@@ -61,11 +58,9 @@ To set active profile:
 
 ## Pass passwords by env
 
-We do not use [Vault](https://projects.spring.io/spring-vault/), but still need to give the password to spring-config application.
+We do not use [Vault](https://projects.spring.io/spring-vault/) yet, but still need to give the password to spring-config.
 
 We use environment variables for that.
-
-The varable itsellf can be set in docker-compose.yml.
 
 ```
 spring:
