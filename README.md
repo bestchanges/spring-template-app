@@ -6,19 +6,23 @@ It contains best development/testing/deployment practice
 ## How to use it
 
 ```
-$ git clone git@thisapp your-app
-$ git rebase 
-# IDEA => open => choose pom.xml => load as project
-# Ctrl+Shift+R (replace in Path) replace: template-app with: your-app 
+$ git clone git@github.com:bestchanges/spring-template-app.git your-app
+$ git remote set-url origin <your git>
 ```
+
+* IDEA => open => choose pom.xml => load as project
+* Ctrl+Shift+R (replace in Path) 
+* Choose: In project
+* replace: template-app with: your-app 
 
 ## What's inside
 
 * [Spring configuration best practice](spring-configuration-best-practice.md)
-* Simple REST service provided some math functions.
-* a scheduled Service
-* Unit tests included to build procedure
+* simple REST service provided some time functions.
+* simple scheduled Service
+* Unit tests included to build
 * Integration test
+* Docker image creation/run/test
 
 ## TODO
 * [ ] add gradle support 

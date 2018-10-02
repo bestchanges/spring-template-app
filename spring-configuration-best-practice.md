@@ -74,6 +74,42 @@ spring:
       password: ${SPRING_CLOUD_CONFIG_PASSWORD:default_password} # use env variable or set default value
 ```
 
+## Keep important property in config even when it holds default value
+
+Bright example here is "spring.cloud.config.enabled" property which controls of usage of config server.
+It is kept in bootstrap.yml even having default value "true". Why? When somebody want to disable config server he needs
+look to the default config and override suitable property. 
+Otherwise he need to dig into documentation and find out the value by himself. 
+
+## Use constructor with Environment instead of @Value
+
+It's better to use constructor initialized with Environment parameter. 
+This is works fine with Unit Tests, MockEnvironment and when autowired by spring.
+
+Good:
+```java
+@Service
+public class TimeService {
+
+    private TimeZone timezone;
+    
+    public TimeService(Environment environment) {
+        this.timezone = TimeZone.getTimeZone(environment.getProperty("app.TimeService.timezone"));
+    }
+}
+```
+
+Not good:
+```java
+@Service
+public class TimeService {
+
+    @Value("${app.TimeService.timezone}")
+    private String timezone; // need to convert to TimeZone
+    
+}
+```
+
 ## About multi-profiles YML
 
 We do not use feature to store several profiles in one files although spring allows it.
