@@ -4,4 +4,5 @@ services:
     build: .
     image: template-app:1.0
     command: ["java", "-Xmx1g", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005", "-Dspring.profiles.active=dev", "-jar", "template-app.jar" ]
-    - "8080:8080"
+    ports:
+      - "8080:8080"
